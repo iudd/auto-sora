@@ -15,7 +15,14 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.iudd.autosora.data.AppDatabase
+import com.iudd.autosora.data.VideoLink
+import com.iudd.autosora.extractor.VideoLinkExtractor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,10 +34,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnRefresh: ImageButton
     private lateinit var fabExtract: FloatingActionButton
 
+    private lateinit var database: AppDatabase
+    private lateinit var videoLinkExtractor: VideoLinkExtractor
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initialize database and extractor
+        database = AppDatabase.getDatabase(this)
+        videoLinkExtractor = VideoLinkExtractor()
 
         // Initialize views
         initializeViews()
@@ -141,8 +155,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun extractVideoLinks() {
-        // TODO: Implement video link extraction
-        Toast.makeText(this, "视频链接提取功能开发中...", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            try {
+                // Show loading
+                fabExtract.isEnabled = false
+                Toast.makeText(this@MainActivity, "正在提取视频链接...", Toast.LENGTH_SHORT).show()
+
+                // Extract from WebView
+                videoLinkExtractor.extractFromWebView(webView) { webViewLinks ->
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            // Save to database
+                            database.videoLinkDao().insertVideoLinks(webViewLinks)
+
+                            withContext(Dispatchers.Main) {
+                                val count = webViewLinks.size
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "成功提取并保存了 $count 个视频链接",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                fabExtract.isEnabled = true
+                            }
+                        } catch (e: Exception) {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "保存失败: ${e.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                fabExtract.isEnabled = true
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, "提取失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                fabExtract.isEnabled = true
+            }
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -161,5 +212,10 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         webView.restoreState(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        webView.destroy()
+        super.onDestroy()
     }
 }
