@@ -1,5 +1,5 @@
-    private lateinit var btnBack: ImageButton
-    private lateinit var btnForward: ImageButton
-    private lateinit var btnRefresh: ImageButton
-    private lateinit var fabExtract: FloatingActionButton
-    private lateinit var bottomNavigation: BottomNavigationView
+        btnBack = findViewById(R.id.btn_back)
+        btnForward = findViewById(R.id.btn_forward)
+        btnRefresh = findViewById(R.id.btn_refresh)
+        fabExtract = findViewById(R.id.fab_extract)
+        bottomNavigation = findViewById(R.id.bottom_navigation)
