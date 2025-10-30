@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.AutoSora.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.AutoSora.PopupOverlay">
+
+            <!-- URL Input and Navigation -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <!-- Navigation Buttons -->
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:contentDescription="@string/back"
+                    android:src="@android:drawable/ic_media_previous"
+                    android:tint="@android:color/white" />
+
+                <ImageButton
+                    android:id="@+id/btn_forward"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:contentDescription="@string/forward"
+                    android:src="@android:drawable/ic_media_next"
+                    android:tint="@android:color/white" />
+
+                <!-- URL Input -->
+                <EditText
+                    android:id="@+id/url_input"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/url_input_background"
+                    android:hint="@string/url_hint"
+                    android:imeOptions="actionGo"
+                    android:inputType="textUri"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textSize="14sp" />
+
+                <!-- Go Button -->
+                <Button
+                    android:id="@+id/btn_go"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:text="@string/go"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <!-- Refresh Button -->
+                <ImageButton
+                    android:id="@+id/btn_refresh"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="4dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:contentDescription="@string/refresh"
+                    android:src="@android:drawable/ic_popup_sync"
+                    android:tint="@android:color/white" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main Content -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- WebView Container -->
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Loading Progress -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:progressDrawable="@drawable/progress_bar"
+            android:visibility="gone" />
+
+        <!-- Floating Action Button for Extract Links -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_extract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/extract_links"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
