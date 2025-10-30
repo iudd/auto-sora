@@ -17,17 +17,12 @@
 
 ### 2. 视频地址提取 ⭐⭐⭐
 - ✅ 自动检测页面中的视频分享地址
-- ✅ 支持主流视频平台：
-  - 哔哩哔哩 (B站)
-  - 抖音
-  - 快手
-  - 西瓜视频
-  - YouTube
-  - 其他视频网站
-- ✅ 提取分享链接格式：
+- ✅ 支持各种视频平台和网站
+- ✅ 提取多种分享链接格式：
   - 标准分享URL
   - 嵌入代码
   - API链接
+  - 播放地址
 
 ### 3. 批量存储管理 ⭐⭐⭐
 - ✅ 自动保存提取的视频地址
@@ -70,7 +65,7 @@ data class VideoLink(
     val id: Long = 0,
     val title: String,
     val url: String,
-    val platform: String, // b站、抖音等
+    val platform: String, // 自动识别平台
     val thumbnail: String? = null,
     val duration: String? = null,
     val extractedAt: Long = System.currentTimeMillis()
