@@ -1,170 +1,105 @@
-# 自动Sora浏览器 - 开发需求文档
+# Auto Sora Browser
 
-## 📱 项目概述
+一个简单而功能完整的Android浏览器应用。
 
-**项目名称**: 自动Sora浏览器  
-**平台**: Android  
-**开发工具**: AIDE (Android IDE)  
-**目标**: 轻量级浏览器，专注于视频分享地址的批量获取和存储
+## 功能特性
 
-## 🎯 核心功能
+- 🌐 **网页浏览**: 基于WebView的完整网页浏览体验
+- 🔍 **地址栏**: 智能URL输入，自动添加https://前缀
+- 🔄 **页面刷新**: 一键刷新当前页面
+- 🏠 **主页导航**: 快速返回默认主页
+- 📚 **书签功能**: 保存和管理常用网站 (待实现)
+- 📜 **历史记录**: 查看浏览历史 (待实现)
+- ⚙️ **设置选项**: 个性化配置 (待实现)
 
-### 1. 基础浏览功能
-- ✅ 地址栏输入网址
-- ✅ 网页加载和显示 (WebView)
-- ✅ 基础导航 (后退、前进、刷新)
-- ✅ 书签功能 (收藏常用网站)
+## 技术架构
 
-### 2. 视频地址提取 ⭐⭐⭐
-- ✅ 自动检测页面中的视频分享地址
-- ✅ 支持各种视频平台和网站
-- ✅ 提取多种分享链接格式：
-  - 标准分享URL
-  - 嵌入代码
-  - API链接
-  - 播放地址
+### 核心组件
 
-### 3. 批量存储管理 ⭐⭐⭐
-- ✅ 自动保存提取的视频地址
-- ✅ 本地数据库存储 (SQLite)
-- ✅ 分类管理 (按平台、日期等)
-- ✅ 导出功能：
-  - 文本文件导出
-  - JSON格式导出
-  - 批量复制到剪贴板
-- ✅ 历史记录查看
-- ✅ 删除/编辑功能
+- **MainActivity**: 主活动，管理整体界面布局
+- **ToolbarFragment**: 地址栏和导航控制
+- **BottomNavigationFragment**: 底部导航栏
+- **WebView**: 网页内容渲染
 
-### 4. 用户界面
-- ✅ 简洁的Material Design风格
-- ✅ 底部导航栏：
-  - 首页 (浏览器)
-  - 收藏夹
-  - 历史记录
-  - 设置
-- ✅ 夜间模式
-- ✅ 手势操作支持
+### 技术栈
 
-## 🏗️ 技术架构
+- **语言**: Java
+- **UI框架**: Android Jetpack (AppCompatActivity, Fragment)
+- **布局**: XML布局文件
+- **WebView**: Android系统WebView组件
 
-### 前端 (UI)
-- **语言**: Kotlin
-- **UI框架**: Android Jetpack Compose (推荐) 或 XML Layout
-- **主题**: Material 3 Design
+### 项目结构
 
-### 核心功能
-- **WebView**: 网页渲染
-- **Room**: 数据持久化
-- **Jsoup/Regex**: HTML解析和地址提取
-- **OkHttp**: 网络请求 (如果需要)
+```
+app/src/main/java/com/iudd/autosora/
+├── MainActivity.java              # 主活动
+├── ToolbarFragment.java           # 工具栏Fragment
+└── BottomNavigationFragment.java # 底部导航Fragment
 
-### 数据结构
-```kotlin
-// 视频地址实体
-data class VideoLink(
-    val id: Long = 0,
-    val title: String,
-    val url: String,
-    val platform: String, // 自动识别平台
-    val thumbnail: String? = null,
-    val duration: String? = null,
-    val extractedAt: Long = System.currentTimeMillis()
-)
-
-// 书签实体
-data class Bookmark(
-    val id: Long = 0,
-    val title: String,
-    val url: String,
-    val createdAt: Long = System.currentTimeMillis()
-)
+app/src/main/res/
+├── layout/
+│   ├── activity_main.xml         # 主界面布局
+│   ├── toolbar.xml               # 工具栏布局
+│   └── bottom_navigation.xml    # 底部导航布局
+├── menu/
+│   └── main_menu.xml             # 主菜单
+├── values/
+│   ├── strings.xml               # 字符串资源
+│   ├── colors.xml                # 颜色资源
+│   └── themes.xml                # 主题样式
+└── AndroidManifest.xml           # 应用清单
 ```
 
-## 📋 开发计划
+## 权限说明
 
-### Phase 1: 基础框架 (1-2天)
-- [ ] 创建Android项目结构
-- [ ] 配置基本依赖
-- [ ] 实现主界面布局
-- [ ] WebView基础功能
+应用需要以下权限：
 
-### Phase 2: 核心功能 (2-3天)
-- [ ] 视频地址提取算法
-- [ ] 数据库设计和实现
-- [ ] 存储管理界面
-- [ ] 批量导出功能
+- `INTERNET`: 访问网络内容
+- `ACCESS_NETWORK_STATE`: 检查网络连接状态
 
-### Phase 3: 优化完善 (1-2天)
-- [ ] UI/UX优化
-- [ ] 错误处理
-- [ ] 性能优化
-- [ ] 测试和调试
+## 编译要求
 
-## 🔧 技术要求
+- **最小SDK版本**: 21 (Android 5.0)
+- **目标SDK版本**: 34 (Android 14)
+- **编译SDK版本**: 34
 
-### Android版本兼容性
-- **最低版本**: API 21 (Android 5.0)
-- **目标版本**: API 34 (Android 14)
+## 依赖库
 
-### 权限需求
-- `INTERNET`: 网络访问
-- `ACCESS_NETWORK_STATE`: 网络状态检查
-- `WRITE_EXTERNAL_STORAGE`: 文件导出 (API < 29)
-- `READ_EXTERNAL_STORAGE`: 文件读取 (API < 29)
-
-### 第三方库
 ```gradle
-dependencies {
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.10.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.room:room-runtime:2.6.1'
-    implementation 'androidx.room:room-ktx:2.6.1'
-    kapt 'androidx.room:room-compiler:2.6.1'
-    implementation 'org.jsoup:jsoup:1.16.1' // HTML解析
-}
+implementation 'androidx.appcompat:appcompat:1.6.1'
+implementation 'com.google.android.material:material:1.11.0'
+implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+implementation 'androidx.fragment:fragment:1.6.2'
 ```
 
-## 🎨 UI设计草图
+## 使用说明
 
-```
-[顶部工具栏]
-地址栏 | 刷新 | 更多
+1. **启动应用**: 打开应用后会自动加载Google主页
+2. **浏览网页**: 在地址栏输入URL，点击"前往"按钮
+3. **刷新页面**: 点击"刷新"按钮重新加载当前页面
+4. **返回主页**: 点击底部导航的"主页"按钮
 
-[WebView区域 - 主要内容]
+## 开发计划
 
-[底部导航栏]
-🏠 浏览器 | ⭐ 收藏 | 📚 历史 | ⚙️ 设置
-```
+### 已完成功能
+- [x] 基础网页浏览
+- [x] 地址栏和导航
+- [x] 页面刷新
+- [x] 底部导航界面
 
-## 📊 预期成果
+### 待实现功能
+- [ ] 书签管理
+- [ ] 历史记录
+- [ ] 设置页面
+- [ ] 下载管理
+- [ ] 多标签页支持
+- [ ] 全屏浏览
+- [ ] 夜间模式
 
-1. **APK文件**: 可安装的Android应用
-2. **源码**: 完整的Kotlin项目
-3. **文档**: 使用说明和API文档
+## 贡献指南
 
-## ⚡ 性能目标
+欢迎提交Issue和Pull Request来改进这个项目。
 
-- **启动时间**: < 2秒
-- **内存占用**: < 100MB
-- **地址提取速度**: < 1秒/页面
-- **存储效率**: 支持1000+地址存储
+## 许可证
 
----
-
-**开发人员**: AI助手  
-**开始日期**: 2025-10-30  
-**预计完成**: 1周内  
-
----
-
-## ❓ 待确认问题
-
-1. 是否需要夜间模式？
-2. 是否支持多标签页？
-3. 是否需要广告拦截功能？
-4. 导出格式的具体要求？
-5. 是否需要云端同步功能？
-
-请确认这些需求，我将开始具体开发！
+本项目采用MIT许可证开源。
