@@ -1,30 +1,10 @@
 <resources>
-    <string name="app_name">自动Sora</string>
-
-    <!-- Main Activity -->
-    <string name="url_hint">输入网址或搜索</string>
+    <string name="app_name">Auto Sora Browser</string>
+    <string name="home">主页</string>
+    <string name="bookmarks">书签</string>
+    <string name="history">历史</string>
+    <string name="settings">设置</string>
     <string name="go">前往</string>
     <string name="refresh">刷新</string>
-    <string name="back">后退</string>
-    <string name="forward">前进</string>
-    <string name="extract_links">提取链接</string>
-    <string name="save_links">保存链接</string>
-
-    <!-- Navigation -->
-    <string name="nav_browser">浏览器</string>
-    <string name="nav_bookmarks">收藏夹</string>
-    <string name="nav_history">历史</string>
-    <string name="nav_settings">设置</string>
-
-    <!-- Messages -->
-    <string name="loading">加载中...</string>
-    <string name="no_links_found">未找到视频链接</string>
-    <string name="links_saved">链接已保存</string>
-    <string name="links_exported">链接已导出</string>
-
-    <!-- Settings -->
-    <string name="settings_title">设置</string>
-    <string name="clear_history">清空历史</string>
-    <string name="export_data">导出数据</string>
-    <string name="about">关于</string>
+    <string name="url_hint">输入网址...</string>
 </resources>
