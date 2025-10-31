@@ -63,6 +63,10 @@ public class ToolbarFragment extends Fragment {
         });
         
         // 加载默认页面
+        loadHomePage();
+    }
+    
+    public void loadHomePage() {
         webView.loadUrl("https://www.google.com");
     }
 }
