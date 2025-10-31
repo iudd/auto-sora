@@ -1,5 +1,0 @@
-        btnBack = findViewById(R.id.btn_back)
-        btnForward = findViewById(R.id.btn_forward)
-        btnRefresh = findViewById(R.id.btn_refresh)
-        fabExtract = findViewById(R.id.fab_extract)
-        bottomNavigation = findViewById(R.id.bottom_navigation)
