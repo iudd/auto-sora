@@ -1,8 +1,9 @@
 package com.iudd.autosora;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import com.iudd.autosora.R;
 
 public class MainActivity extends AppCompatActivity {
 
