@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.iudd.autosora">
 
-    <uses-sdk tools:overrideLibrary="androidx.appcompat" />
+    <uses-sdk tools:overrideLibrary="androidx.appcompat,androidx.core" />
 
     <application
         android:allowBackup="true"
